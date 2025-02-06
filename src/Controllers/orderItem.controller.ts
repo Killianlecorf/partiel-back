@@ -109,3 +109,45 @@ export const deleteOrderItem = async (req: Request, res: Response): Promise<void
     res.status(500).json({ message: 'Error deleting order item' });
   }
 };
+
+export const updateOrderItem = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const mikro = await orm;
+    const em = mikro.em.fork();
+
+    const orderItemId = parseInt(req.params.id, 10);
+    const { productId, quantity } = req.body;
+
+    if (isNaN(orderItemId)) {
+      res.status(400).json({ message: 'Invalid order item ID' });
+      return;
+    }
+
+    const orderItem = await em.findOne(OrderItem, { id: orderItemId });
+
+    if (!orderItem) {
+      res.status(404).json({ message: 'Order item not found' });
+      return;
+    }
+
+    if (productId) {
+      const product = await em.findOne(Product, { id: productId });
+      if (!product) {
+        res.status(404).json({ message: 'Product not found' });
+        return;
+      }
+      orderItem.product = product;
+    }
+
+    if (quantity !== undefined) {
+      orderItem.quantity = quantity;
+    }
+
+    await em.persistAndFlush(orderItem);
+
+    res.status(200).json({ message: 'Order item updated successfully', orderItem });
+  } catch (err) {
+    console.error('Error updating order item:', err);
+    res.status(500).json({ message: 'Error updating order item' });
+  }
+};
