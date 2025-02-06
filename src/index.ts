@@ -4,6 +4,7 @@ import mikroConfig from './Database/mikro-orm.config';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import userRouter from './Routes/user.routes';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const port = 5656;
@@ -11,6 +12,7 @@ const port = 5656;
 dotenv.config();
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(cors({
   origin: [
