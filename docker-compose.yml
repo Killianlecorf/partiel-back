@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: azqswx12
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  node_api:
+    build: .
+    depends_on:
+      - db
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: azqswx12
+      DB_NAME: partiel
+      DB_HOST: db
+      DB_PORT: 5432
+    ports:
+      - "5656:5656"
+    volumes:
+      - .:/app
+    command: npm run dev
+
+volumes:
+  pgdata:

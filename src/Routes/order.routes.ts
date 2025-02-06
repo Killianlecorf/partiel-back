@@ -8,7 +8,7 @@ import {
 
 const router = Router();
 
-router.post('/', addOrderWithItems);
+router.post('/add', addOrderWithItems);
 router.get('/all', getAllOrders);
 router.get('/user/:userId', getUserOrders);
 router.put('/status/:id', updateOrderStatus);

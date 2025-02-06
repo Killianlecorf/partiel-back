@@ -9,9 +9,9 @@ export const addOrderWithItems = async (req: Request, res: Response): Promise<vo
     const mikro = await orm;
     const em = mikro.em.fork();
 
-    const { userId, name, statut } = req.body;
+    const { userId, name, status } = req.body;
 
-    if (!userId || !name || !statut) {
+    if (!userId || !name || !status) {
       res.status(400).json({ message: 'Invalid input data' });
       return;
     }
@@ -32,7 +32,7 @@ export const addOrderWithItems = async (req: Request, res: Response): Promise<vo
 
     const order = new Order();
     order.name = name;
-    order.statut = statut;
+    order.statut = status;
     order.createdAt = new Date();
     order.updateAt = new Date();
     order.user = user;
