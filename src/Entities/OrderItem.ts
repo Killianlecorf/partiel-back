@@ -10,9 +10,9 @@ export class OrderItem {
   @ManyToOne(() => Product)
   product!: Product;
 
-  @ManyToOne(() => Order)
-  order!: Order;
-
   @Property()
   quantity!: number;
+
+  @Property()
+  userId!: number;
 }

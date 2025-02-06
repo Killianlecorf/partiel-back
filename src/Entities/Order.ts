@@ -1,5 +1,4 @@
 import { Entity, PrimaryKey, Property, OneToMany, ManyToOne } from '@mikro-orm/core';
-import { OrderItem } from './OrderItem';
 import { User } from './User';
 
 @Entity()
@@ -19,8 +18,8 @@ export class Order {
   @Property()
   updateAt!: Date;
 
-  @OneToMany(() => OrderItem, (orderItem) => orderItem.order)
-  orderItems = new Array<OrderItem>();
+  @Property({ type: 'json', nullable: true })
+  orderItems: any[] = [];
 
   @ManyToOne(() => User)
   user!: User;

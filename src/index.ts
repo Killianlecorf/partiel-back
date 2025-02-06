@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import userRouter from './Routes/user.routes';
 import productRouter from './Routes/product.routes';
 import orderRouter from './Routes/order.routes';
+import orderItemRouter from './Routes/orderItem.routes';
 import cookieParser from 'cookie-parser';
 
 const app = express();
@@ -18,7 +19,7 @@ app.use(cookieParser());
 
 app.use(cors({
   origin: [
-    'http://localhost:5000'
+    'http://localhost:3000'
   ],
   credentials: true
 }));
@@ -26,6 +27,7 @@ app.use(cors({
 app.use('/users', userRouter);
 app.use('/products', productRouter);
 app.use('/orders', orderRouter);
+app.use('/ordersItems', orderItemRouter);
 
 
 const ormPromise = MikroORM.init(mikroConfig).then(orm => {

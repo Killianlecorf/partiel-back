@@ -1,8 +1,18 @@
 import { Router } from 'express';
-import { addOrder } from '../Controllers/order.controller';
+import { 
+    addOrderWithItems,
+    getAllOrders,
+    getUserOrders,
+    updateOrderStatus
+} from '../Controllers/order.controller';
 
 const router = Router();
 
-router.post('/', addOrder);
+router.post('/', addOrderWithItems);
+router.get('/all', getAllOrders);
+router.get('/user/:userId', getUserOrders);
+router.put('/status/:id', updateOrderStatus);
+
+
 
 export default router;
