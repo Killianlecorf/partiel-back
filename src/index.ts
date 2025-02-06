@@ -4,6 +4,8 @@ import mikroConfig from './Database/mikro-orm.config';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import userRouter from './Routes/user.routes';
+import productRouter from './Routes/product.routes';
+import orderRouter from './Routes/order.routes';
 import cookieParser from 'cookie-parser';
 
 const app = express();
@@ -22,6 +24,9 @@ app.use(cors({
 }));
 
 app.use('/users', userRouter);
+app.use('/products', productRouter);
+app.use('/orders', orderRouter);
+
 
 const ormPromise = MikroORM.init(mikroConfig).then(orm => {
   console.log('MikroORM has been successfully initialized.');

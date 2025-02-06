@@ -28,13 +28,11 @@ export class User {
   @Property()
   password!: string;
 
-  // Hook pour hacher le mot de passe avant de l'enregistrer
   async hashPassword(): Promise<void> {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
   }
 
-  // Vérifier si le mot de passe correspond
   async validatePassword(plainPassword: string): Promise<boolean> {
     return await bcrypt.compare(plainPassword, this.password);
   }
