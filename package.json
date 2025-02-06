@@ -1,0 +1,40 @@
+{
+  "name": "partiel-back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
+    "build": "tsc",
+    "migration-initial": "npx mikro-orm migration:create --initial --config src/Database/mikro-orm.config.ts",
+    "migration:create": "mikro-orm migration:create --config src/Database/mikro-orm.config.ts",
+    "migration:up": "mikro-orm migration:up --config src/Database/mikro-orm.config.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@mikro-orm/core": "^6.4.5",
+    "@mikro-orm/migrations": "^6.4.5",
+    "@mikro-orm/postgresql": "^6.4.5",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@mikro-orm/cli": "^6.4.5",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/eslint": "^9.6.1",
+    "@types/estree": "^1.0.6",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.8",
+    "@types/node": "^22.13.1",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}
