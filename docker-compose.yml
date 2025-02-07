@@ -7,11 +7,9 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: azqswx12
-      POSTGRES_DB: db
+      POSTGRES_DB: partiel
     ports:
       - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
 
   node_api:
     build: .
@@ -27,7 +25,6 @@ services:
       - "5656:5656"
     volumes:
       - .:/app
-    command: npm run dev
 
 volumes:
   pgdata:

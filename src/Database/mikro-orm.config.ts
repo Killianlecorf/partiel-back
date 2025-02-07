@@ -7,10 +7,7 @@ import { OrderItem } from '../Entities/OrderItem';
 import { Product } from '../Entities/Product';
 import dotenv from 'dotenv';
 
-config({
-    path: __dirname + '/../.env'
-});
-
+config();
 dotenv.config();
 
 export default defineConfig({
@@ -22,6 +19,6 @@ export default defineConfig({
     port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 5432,
     extensions: [Migrator],
     migrations: {
-        path: __dirname + '/migrations'
+        path: __dirname + '/migrations',
     },
 });

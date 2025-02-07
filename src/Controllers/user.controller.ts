@@ -10,7 +10,7 @@ export const addUser = async (req: Request, res: Response): Promise<void> => {
     const mikro = await orm;
     const em = mikro.em.fork();
 
-    const { name, email, password } = req.body;
+    const { name, email, password, isAdmin } = req.body; 
 
     if (!name || !email || !password) {
       res.status(400).json({ message: 'Invalid input data' });
@@ -21,7 +21,7 @@ export const addUser = async (req: Request, res: Response): Promise<void> => {
     user.name = name;
     user.email = email;
     user.password = password;
-    user.isAdmin = false;
+    user.isAdmin = isAdmin || false;
     user.createdAt = new Date();
     user.updateAt = new Date();
 
@@ -35,6 +35,7 @@ export const addUser = async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({ message: 'Error adding user' });
   }
 };
+
 
 export const getUserById = async (req: Request, res: Response): Promise<void> => {
   try {
