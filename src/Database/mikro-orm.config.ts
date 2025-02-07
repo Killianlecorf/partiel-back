@@ -16,6 +16,7 @@ dotenv.config();
 export default defineConfig({
     dbName: process.env.DB_NAME,
     user: process.env.DB_USER,
+    host: process.env.DB_HOST || 'db',
     password: process.env.DB_PASSWORD,
     entities: [User, Order, OrderItem, Product],
     port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 5432,

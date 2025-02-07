@@ -3,6 +3,7 @@ import { Order } from '../Entities/Order';
 import { User } from '../Entities/User';
 import { OrderItem } from '../Entities/OrderItem';
 import { orm } from '..';
+import { Product } from '../Entities/Product';
 
 export const addOrderWithItems = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -17,17 +18,23 @@ export const addOrderWithItems = async (req: Request, res: Response): Promise<vo
     }
 
     const user = await em.findOne(User, { id: userId });
-
     if (!user) {
       res.status(404).json({ message: 'User not found' });
       return;
     }
 
     const orderItems = await em.find(OrderItem, { userId });
-
     if (orderItems.length === 0) {
       res.status(404).json({ message: 'No order items found for this user' });
       return;
+    }
+
+    for (const orderItem of orderItems) {
+      const product = await em.findOne(Product, { id: orderItem.product.id });
+      if (product) {
+        product.stockAvailable -= orderItem.quantity;
+        await em.persistAndFlush(product);
+      }
     }
 
     const order = new Order();
@@ -42,12 +49,13 @@ export const addOrderWithItems = async (req: Request, res: Response): Promise<vo
 
     await em.nativeDelete(OrderItem, { userId });
 
-    res.status(201).json({ message: 'Order created successfully and order items cleared', order });
+    res.status(201).json({ message: 'Order created successfully, product stock updated, and order items cleared', order });
   } catch (err) {
     console.error('Error creating order with items:', err);
     res.status(500).json({ message: 'Error creating order with items' });
   }
 };
+
 
 
 export const getAllOrders = async (req: Request, res: Response): Promise<void> => {
