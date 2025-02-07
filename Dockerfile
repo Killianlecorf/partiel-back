@@ -1,23 +1,20 @@
-FROM node:18-alpine AS build
+FROM node:20
 
-WORKDIR /app
+RUN apt-get update && apt-get install -y postgresql-client dos2unix
 
-COPY package*.json ./
-RUN npm install
+WORKDIR /usr/src/partiel-back
+
+COPY package*.json .
+RUN npm install --verbose
 
 COPY . .
 
-FROM node:18-alpine AS production
+RUN dos2unix init.sh wait-for-it.sh
 
-RUN apk add --no-cache netcat-openbsd
+RUN chmod +x init.sh wait-for-it.sh
 
-WORKDIR /app
-
-COPY --from=build /app /app
-
-COPY start.sh .
-RUN chmod +x start.sh
+RUN npm run build
 
 EXPOSE 5656
 
-CMD ["/bin/sh", "-c", "./start.sh"]
+CMD ["sh", "./init.sh"]

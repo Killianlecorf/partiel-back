@@ -19,7 +19,7 @@ export const addProduct = async (req: Request, res: Response): Promise<void> => 
     product.description = description;
     product.price = price;
     product.stockAvailable = stockAvailable;
-    product.Image = image;
+    product.image = image;
     product.createdAt = new Date();
     product.updateAt = new Date();
 
@@ -87,7 +87,7 @@ export const getAllProducts = async (req: Request, res: Response): Promise<void>
       if (description !== undefined) product.description = description;
       if (price !== undefined) product.price = price;
       if (stockAvailable !== undefined) product.stockAvailable = stockAvailable;
-      if (image !== undefined) product.Image = image;
+      if (image !== undefined) product.image = image;
       product.updateAt = new Date();
   
       await em.persistAndFlush(product);
