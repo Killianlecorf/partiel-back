@@ -22,6 +22,6 @@ export default defineConfig({
     port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 5432,
     extensions: [Migrator],
     migrations: {
-        path: __dirname + '/migrations'
+        path: __dirname + '/migrations',
     },
 });
