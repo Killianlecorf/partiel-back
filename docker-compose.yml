@@ -1,39 +1,30 @@
 version: "3.8"
 
 services:
-  postgres:
+  db:
     image: postgres:14
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: azqswx12
-      POSTGRES_DB: postgres
+      POSTGRES_DB: partiel
     ports:
       - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   node_api:
     build: .
     depends_on:
-      postgres:
-        condition: service_healthy
+      - db
     environment:
       DB_USER: postgres
       DB_PASSWORD: azqswx12
-      DB_NAME: postgres
-      DB_HOST: postgres
+      DB_NAME: partiel
+      DB_HOST: db
       DB_PORT: 5432
     ports:
       - "5656:5656"
     volumes:
       - .:/app
-    command: ["npm", "run", "dev"]
 
 volumes:
   pgdata:
