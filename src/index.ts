@@ -29,9 +29,13 @@ app.use('/products', productRouter);
 app.use('/orders', orderRouter);
 app.use('/ordersItems', orderItemRouter);
 
-
-const ormPromise = MikroORM.init(mikroConfig).then(orm => {
+const ormPromise = MikroORM.init(mikroConfig).then(async orm => {
   console.log('MikroORM has been successfully initialized.');
+
+  const migrator = orm.getMigrator();
+  await migrator.up();
+  console.log('Migrations applied successfully.');
+
   return orm;
 }).catch(err => {
   console.error('Error during MikroORM initialization:', err);

@@ -16,4 +16,4 @@ COPY .env .env
 
 EXPOSE 5656
 
-CMD ["./start.sh"]
+CMD ["npm", "run", "dev"]
