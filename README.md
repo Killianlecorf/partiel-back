@@ -1,37 +1,57 @@
-# partiel-back
+# Projet Node.js avec Express, PostgreSQL et MikroORM
 
-# Application Node.js avec Express
-
-Cette application est un projet Node.js utilisant le framework Express pour créer une API web. Le projet inclut également un fichier Docker Compose pour faciliter le déploiement de l'application dans un conteneur Docker.
+Ce projet utilise **Node.js**, **Express**, **PostgreSQL** comme base de données et **MikroORM** pour l'ORM (Object-Relational Mapper). Ce README vous guidera pour démarrer et configurer votre environnement.
 
 ## Prérequis
 
-Avant de commencer, vous devez avoir installé les outils suivants sur votre machine :
+1. **Node.js** installé sur votre machine. Si ce n'est pas déjà fait, vous pouvez le télécharger ici : [Node.js](https://nodejs.org/)
+2. **PostgreSQL** installé sur votre machine ou une base de données PostgreSQL disponible (vous pouvez installer PostgreSQL via [ce lien](https://www.postgresql.org/download/)).
+3. **NPM** ou **Yarn** pour gérer les dépendances.
 
-- [Node.js](https://nodejs.org/) (version 12 ou supérieure)
-- [npm](https://www.npmjs.com/)
-- [Docker](https://www.docker.com/) et [Docker Compose](https://docs.docker.com/compose/)
+## Démarrage du projet
 
-## Installation
+### 1. Cloner le repository
 
-### Installation locale
+```bash
+git clone https://github.com/Killianlecorf/partiel-back.git
+```
 
-1. Clonez ce dépôt sur votre machine locale :
+### 2. Installer les dépendances
 
-   ```bash
-   git clone https://github.com/votre-utilisateur/nom-du-repository.git
-   cd nom-du-repository
-
-2. Installez les dépendances du projet :
-
-Avec npm :
- 
+```bash
 npm install
+```
+### 3. Configurer la base de données
 
-3. Lancez l'application en mode développement :
+Créez une base de données PostgreSQL avec pgadmin que l'on nomme "partiel" avec ce mot de passe "azqswx12" et comme user "postgres"
 
-npm start
+Ajouter ce code dans le .env
 
-### Démarrer avec Docker
+```js
+PORT= 5656
+JWT_SECRET='fewfouiwdjvniubgwrujfoirbegobijkertpiohgregret5h7tre85hg4'
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=azqswx12
+DB_NAME=partiel
+POSTGRES_PASSWORD=azqswx12
+```
 
-docker-compose up --build -d
+### 4. Créer les migrations
+
+Pour créer des migrations qui synchroniseront la structure de votre base de données avec vos entités, exécutez la commande suivante :
+
+```bash
+npx mikro-orm migration:create
+```
+
+```bash
+npx mikro-orm migration:up
+```
+
+### 5. Lancer le serveur Express
+
+```bash
+npm run dev
+```
