@@ -23,7 +23,7 @@ npm install
 ```
 ### 3. Configurer la base de données
 
-Créez une base de données PostgreSQL avec pgadmin que l'on nomme "test" avec ce mot de passe "azqswx12" et comme user "postgres"
+Créez une base de données PostgreSQL avec pgadmin que l'on nomme "test" avec votre mot de passe et comme user "postgres"
 
 Ajouter ce code dans le .env
 
@@ -33,18 +33,18 @@ JWT_SECRET='fewfouiwdjvniubgwrujfoirbegobijkertpiohgregret5h7tre85hg4'
 DB_HOST="localhost"
 DB_PORT=5432
 DB_USER="postgres"
-DB_PASSWORD="azqswx12"
+DB_PASSWORD="<votre mot de passe>"
 DB_NAME="test"
 
 DATABASE_HOST="localhost"
 DATABASE_PORT=5432
 DATABASE_NAME="test"
 DATABASE_USER="postgres"
-DATABASE_PASS="azqswx12"
+DATABASE_PASS="<votre mot de passe>"
 
 POSTGRES_DB="test"
 POSTGRES_USER="postgres"
-POSTGRES_PASSWORD="azqswx12"
+POSTGRES_PASSWORD="<votre mot de passe>"
 ```
 
 ## Avec docker
