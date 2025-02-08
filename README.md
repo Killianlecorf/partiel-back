@@ -30,13 +30,31 @@ Ajouter ce code dans le .env
 ```js
 PORT= 5656
 JWT_SECRET='fewfouiwdjvniubgwrujfoirbegobijkertpiohgregret5h7tre85hg4'
-DB_HOST=localhost
+DB_HOST="localhost"
 DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=azqswx12
-DB_NAME=partiel
-POSTGRES_PASSWORD=azqswx12
+DB_USER="postgres"
+DB_PASSWORD="azqswx12"
+DB_NAME="test"
+
+DATABASE_HOST="localhost"
+DATABASE_PORT=5432
+DATABASE_NAME="test"
+DATABASE_USER="postgres"
+DATABASE_PASS="azqswx12"
+
+POSTGRES_DB="test"
+POSTGRES_USER="postgres"
+POSTGRES_PASSWORD="azqswx12"
 ```
+
+## Avec docker
+
+```bash
+docker-compose up --build -d
+```
+
+
+## 1. En local
 
 ### 4. Créer les migrations
 
