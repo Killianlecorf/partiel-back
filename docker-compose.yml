@@ -1,26 +1,36 @@
-version: "3.8"
-
 services:
+  order-service:
+    container_name: order-service
+    build:
+      context: .
+    ports:
+      - "5656:5656"
+    env_file:
+      - ./.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: always
+
   postgres:
+    container_name: postgres
     image: postgres:14
     restart: always
     ports:
       - "5432:5432"
     env_file:
       - ./.env
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASS}
     volumes:
-      - pgdata:/var/lib/postgresql/data
-
-  node_api:
-    container_name: api
-    build: .
-    depends_on:
-      - postgres
-    env_file:
-      - ./.env
-    ports:
-      - "5656:5656"
-
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${DATABASE_USER}", "-d", "${DATABASE_NAME}"]
+      interval: 10s
+      retries: 5
+      timeout: 5s
 
 volumes:
-  pgdata:
+  postgres-data:

@@ -32,11 +32,10 @@ wait_for() {
     usage 2
   fi
 
-  echoerr "Waiting for $HOST:$PORT to be available..."
-
   for i in $(seq 1 $TIMEOUT); do
-    if nc -z -w1 "$HOST" "$PORT" > /dev/null 2>&1; then
-      echoerr "$HOST:$PORT is available!"
+    nc -z "$HOST" "$PORT" > /dev/null 2>&1
+    result=$?
+    if [[ $result -eq 0 ]]; then
       if [[ -n "$CMD" ]]; then
         exec $CMD
       fi
@@ -44,53 +43,53 @@ wait_for() {
     fi
     sleep 1
   done
-
-  echoerr "Timeout: $HOST:$PORT is not available after ${TIMEOUT} seconds"
+  echo "Operation timed out after ${TIMEOUT} seconds"
   exit 1
 }
 
-# Parse arguments
-while [[ $# -gt 0 ]]; do
+while [[ $# -gt 0 ]]
+do
   case "$1" in
     *:* )
-      HOST=$(echo "$1" | cut -d : -f 1)
-      PORT=$(echo "$1" | cut -d : -f 2)
-      shift
-      ;;
+    HOST=$(echo "$1" | cut -d : -f 1)
+    PORT=$(echo "$1" | cut -d : -f 2)
+    shift 1
+    ;;
     -q | --quiet)
-      QUIET=1
-      shift
-      ;;
+    QUIET=1
+    shift 1
+    ;;
     -s | --strict)
-      STRICT=1
-      shift
-      ;;
+    STRICT=1
+    shift 1
+    ;;
     -t)
-      TIMEOUT="$2"
-      if [[ -z "$TIMEOUT" ]]; then break; fi
-      shift 2
-      ;;
+    TIMEOUT="$2"
+    if [[ -z "$TIMEOUT" ]]; then break; fi
+    shift 2
+    ;;
     --timeout=*)
-      TIMEOUT="${1#*=}"
-      shift
-      ;;
+    TIMEOUT="${1#*=}"
+    shift 1
+    ;;
     --)
-      shift
-      CMD="$@"
-      break
-      ;;
+    shift
+    CMD="$@"
+    break
+    ;;
     --help)
-      usage 0
-      ;;
+    usage 0
+    ;;
     *)
-      echoerr "Unknown argument: $1"
-      usage 1
-      ;;
+    echoerr "Unknown argument: $1"
+    usage 1
+    ;;
   esac
 done
 
-if [[ "$STRICT" -eq 1 ]]; then
+if [[ "$STRICT" = "1" ]]; then
   wait_for
+  exec $CMD
 else
   wait_for "$@" &
   wait $!
