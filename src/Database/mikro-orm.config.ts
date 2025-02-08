@@ -20,5 +20,6 @@ export default defineConfig({
     extensions: [Migrator],
     migrations: {
         path: __dirname + '/migrations',
-    },
+        glob: '!(*.d).{js,ts}',
+      },
 });

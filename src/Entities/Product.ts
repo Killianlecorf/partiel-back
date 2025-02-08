@@ -18,7 +18,7 @@ export class Product {
   stockAvailable!: number;
 
   @Property()
-  Image!: string;
+  image!: string;
 
   @Property()
   createdAt!: Date;
