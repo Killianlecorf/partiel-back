@@ -23,7 +23,7 @@ npm install
 ```
 ### 3. Configurer la base de données
 
-Créez une base de données PostgreSQL avec pgadmin que l'on nomme "partiel" avec ce mot de passe "azqswx12" et comme user "postgres"
+Créez une base de données PostgreSQL avec pgadmin que l'on nomme "test" avec ce mot de passe "azqswx12" et comme user "postgres"
 
 Ajouter ce code dans le .env
 
